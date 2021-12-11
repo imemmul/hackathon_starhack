@@ -2,11 +2,12 @@ from flask import Flask, jsonify, request
 import csv
 
 app = Flask(__name__)
-
 data_json = dict()
-reader = csv.DictReader(open('data.csv'))
-for row in reader:
-    data_json.update(row)
+
+def read_data():
+    reader = csv.DictReader(open('data.csv'))
+    for row in reader:
+        data_json.update(row)
 
 @app.route('/')
 def index():
