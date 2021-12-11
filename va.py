@@ -36,16 +36,6 @@ def get_audio():
             print("error; {0}".format(e))
 
 
-def callback(recognizer, audio):
-    try:
-        text = recognizer.recognize_google(audio)
-        print("You said" + recognizer.recognize_google(audio))
-        if "pizza" in text.lower():
-            speak("Hi, Emir")
-    except (sr.UnknownValueError, sr.RequestError):
-        speak("Sorry, I couldn't hear.")
-
-
 if __name__ =="__main__":
     r = sr.Recognizer()
     m = sr.Microphone()
@@ -53,4 +43,3 @@ if __name__ =="__main__":
         r.adjust_for_ambient_noise(source, duration=0.2)
     print("--- BACKGROUND LISTENING HAS BEEN STARTED ---")
     stop_listening = r.listen_in_background(m, callback=callback)
-    pass
