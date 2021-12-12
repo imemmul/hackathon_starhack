@@ -1,4 +1,0 @@
-,order_id,order_type,latitude,longtitude
-0,1,"('food_type', 'pizza')",10,20
-1,1,"('food_kind', 'margarita')",10,20
-2,1,"('drink', 'cola')",10,20

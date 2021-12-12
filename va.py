@@ -32,7 +32,7 @@ def command_loop_drink():
         speak(half_response)
         selected_order_type['drink'] = 'sprite'
     print(selected_order_type)
-    save_order_type()
+    send_order_type()
 
 def command_loop_food():
     try:
@@ -54,16 +54,9 @@ def command_loop_food():
     except:
         pass
 
-def save_order_type():
-    dict_car['order_type'] = selected_order_type
-    print(dict_car)
-    write_csv('data_car.csv')
-    
+def send_order_type():
+    api.main(selected_order_type)
 
-def write_csv(filename):
-    dict_car['order_type'] = dict_car['order_type'].items()
-    pd.DataFrame.from_dict(data=dict_car).to_csv(filename)
-    api.main()
     
 
 def get_audio():
