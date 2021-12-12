@@ -1,6 +1,7 @@
 import pyttsx3
 import speech_recognition as sr
 import csv
+import api
 
 
 engine = pyttsx3.init()
@@ -43,20 +44,21 @@ def command_loop_food():
                 speak("Okay, do you want any drink ?")
                 selected_order_type['food_kind'] = 'margarita'
                 command_loop_drink()
+        api
     except:
         pass
 
 def save_order_type():
     dict_car['order_type'] = selected_order_type
-    write_csv('data_car.csv')
+    write_csv('data_car.csv', dict_car)
 
-def write_csv(filename):
+def write_csv(filename, dict_given):
     csv_file = filename
     try:
         with open(csv_file, 'w') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=csv_columns_store)
             writer.writeheader()
-            for data in dict_store:
+            for data in dict_given:
                 writer.writerow(data)
     except IOError:
         print("I/O error")

@@ -1,14 +1,24 @@
 from flask import Flask, jsonify, request
 import csv
 
-app = Flask(__name__)
-data_json = [{'order_id': 1, 'order_type': 'food', 'latitude': 10, 'longtitude': 20}]
-data_stores = [{'name':'Starbucks', 'latitude':30.5, 'longtitude':50.5, 'duration':0.5}, {'name':'Burger', 'latitude':20.5, 'longtitude':35.5, 'duration':35}]
+def read_car_csv():    
+    with open("data_car.csv", "r") as file:
+        data = file.read()
+    rows = data.split("\n")
+    data_car_dict = {}
+    for row in rows:
+        info = row.split(",")
+    order_id = int(info[0])
+    order_type = info[1]
+    latitude = float(info[2])
+    longtitude = float(info[3])
+    data_car_dict[order_id] = {"order_type":order_type,
+                                "latitude":latitude,
+                                "longtitude":longtitude}
+    return data_car_dict
 
-def read_data(data):
-    reader = csv.DictReader(open('data_stores.csv'))
-    for row in reader:
-        data.update(row)
+
+app = Flask(__name__)
 
 @app.route('/')
 def index():
@@ -18,12 +28,12 @@ def index():
 def post():
     if request.method == 'POST':
         #data = request.form[example_json]
-        return jsonify(data_json)
+        return jsonify(read_car_csv())
 
-@app.route('/stores', methods= ['POST'])
-def post_store():
-    if request.method == 'POST':
-        return jsonify(data_stores)
+# @app.route('/stores', methods= ['POST'])
+# def post_store():
+#     if request.method == 'POST':
+#         return jsonify(data_stores)
 
 
 if __name__ == "__main__":
