@@ -14,6 +14,8 @@ csv_columns_car = ['order_id', 'order_type', 'latitude', 'longtitude']
 
 half_response = 'Okay, i took your order i will check whether it is available.'
 
+
+
 def speak(text):
     engine.setProperty("rate", 125)
     engine.say(text)
@@ -38,6 +40,7 @@ def command_loop_food():
         if "pizza" in order:
             speak("How do you want your pizza ?")
             selected_order_type['food_type'] = 'pizza'
+            order = get_audio()
             if 'pepperoni' in order:
                 speak("Okay, do you want any drink ?")
                 selected_order_type['food_kind'] = 'pepperoni'
@@ -58,10 +61,10 @@ def write_csv(filename, dict_given):
     csv_file = filename
     try:
         with open(csv_file, 'w') as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames=csv_columns_store)
+            writer = csv.DictWriter(csvfile, fieldnames=csv_columns_car)
             writer.writeheader()
             for data in dict_given:
-                writer.writerow(data)
+                writer.writerow(data,dict_given[data])
     except IOError:
         print("I/O error")
 
@@ -70,7 +73,7 @@ def get_audio():
     with sr.Microphone() as source:
         print("Say something!")
         try:
-            audio = r.listen(source, phrase_time_limit=1)
+            audio = r.listen(source, phrase_time_limit=1.5)
             return (r.recognize_google(audio).lower())
         except TypeError as e:
             print("error; {0}".format(e))
