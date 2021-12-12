@@ -13,15 +13,6 @@ def read_car_csv():
     data_car_dict = pd.read_csv('data_car.csv').to_dict()
     return data_car_dict
 
-# def read_car_csv():
-#     car_dict = dict()
-#     with open('data_car.csv', mode='r') as infile:
-#         reader = csv.reader(infile)
-#         with open('coors_new.csv', mode='w') as outfile:
-#             writer = csv.writer(outfile)
-#             car_dict = {rows[0]:rows[1] for rows in reader}
-#     print(car_dict)
-#     return car_dict
 
 app = Flask(__name__)
 
@@ -43,6 +34,4 @@ def main():
     app.run()
 
 if __name__ == "__main__":
-    #read_data(data_stores)
-    #read_data(data_json)
     main()
