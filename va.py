@@ -28,6 +28,8 @@ def command_loop_drink():
     elif 'sprite' in order:
         speak(half_response)
         selected_order_type['drink'] = 'sprite'
+    print(selected_order_type)
+    save_order_type()
 
 def command_loop_food():
     try:
@@ -44,13 +46,13 @@ def command_loop_food():
                 speak("Okay, do you want any drink ?")
                 selected_order_type['food_kind'] = 'margarita'
                 command_loop_drink()
-        api
     except:
         pass
 
 def save_order_type():
     dict_car['order_type'] = selected_order_type
     write_csv('data_car.csv', dict_car)
+    print(dict_car)
 
 def write_csv(filename, dict_given):
     csv_file = filename
