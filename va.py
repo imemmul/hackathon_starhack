@@ -63,8 +63,8 @@ def write_csv(filename, dict_given):
         with open(csv_file, 'w') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=csv_columns_car)
             writer.writeheader()
-            for data in dict_given:
-                writer.writerow(data,dict_given[data])
+            for data in dict_given.items():
+                writer.writerow(data)
     except IOError:
         print("I/O error")
 
