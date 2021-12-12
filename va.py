@@ -1,6 +1,7 @@
 import pyttsx3
 import speech_recognition as sr
 import csv
+import pandas as pd
 import api
 
 
@@ -23,50 +24,50 @@ def speak(text):
     engine.stop()
 
 def command_loop_drink():
-    order = get_audio()
-    if 'coke' or 'cola' in order:
-        speak(half_response)
-        selected_order_type['drink'] = 'cola'
-    elif 'sprite' in order:
-        speak(half_response)
-        selected_order_type['drink'] = 'sprite'
-    print(selected_order_type)
+    # order = get_audio()
+    # if 'coke' or 'cola' in order:
+    #     speak(half_response)
+    #     selected_order_type['drink'] = 'cola'
+    # elif 'sprite' in order:
+    #     speak(half_response)
+    #     selected_order_type['drink'] = 'sprite'
+    # print(selected_order_type)
     save_order_type()
 
 def command_loop_food():
     try:
-        speak("What do you want to order ?")
-        order = get_audio()
-        if "pizza" in order:
-            speak("How do you want your pizza ?")
-            selected_order_type['food_type'] = 'pizza'
-            order = get_audio()
-            if 'pepperoni' in order:
-                speak("Okay, do you want any drink ?")
-                selected_order_type['food_kind'] = 'pepperoni'
-                command_loop_drink()
-            elif 'margarita' in order:
-                speak("Okay, do you want any drink ?")
-                selected_order_type['food_kind'] = 'margarita'
-                command_loop_drink()
+        # speak("What do you want to order ?")
+        # order = get_audio()
+        # if "pizza" in order:
+        #     speak("How do you want your pizza ?")
+        #     selected_order_type['food_type'] = 'pizza'
+        #     order = get_audio()
+        #     if 'pepperoni' in order:
+        #         speak("Okay, do you want any drink ?")
+        #         selected_order_type['food_kind'] = 'pepperoni'
+        #         command_loop_drink()
+        #     elif 'margarita' in order:
+        #         speak("Okay, do you want any drink ?")
+        #         selected_order_type['food_kind'] = 'margarita'
+        #         command_loop_drink()
+        selected_order_type['food_type'] = 'pizza'
+        selected_order_type['food_kind'] = 'margarita'
+        selected_order_type['drink'] = 'cola'
+        command_loop_drink()
     except:
         pass
 
 def save_order_type():
     dict_car['order_type'] = selected_order_type
-    write_csv('data_car.csv', dict_car)
     print(dict_car)
+    write_csv('data_car.csv')
+    
 
-def write_csv(filename, dict_given):
-    csv_file = filename
-    try:
-        with open(csv_file, 'w') as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames=csv_columns_car)
-            writer.writeheader()
-            for data in dict_given.items():
-                writer.writerow(data)
-    except IOError:
-        print("I/O error")
+def write_csv(filename):
+    dict_car['order_type'] = dict_car['order_type'].items()
+    pd.DataFrame.from_dict(data=dict_car).to_csv(filename)
+    api.main()
+    
 
 def get_audio():
     r = sr.Recognizer()
